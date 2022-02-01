@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ZStack{
+            // BACKGROUND
+            
+            
+            //INTERFACE
+            
+            //POP-UP
+        }
+        .background(
+            Image("background")
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        )
     }
 }
 
