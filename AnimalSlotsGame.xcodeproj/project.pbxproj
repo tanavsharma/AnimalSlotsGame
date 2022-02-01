@@ -56,9 +56,10 @@
 		03C6928F27A9B73F00F6CE62 /* AnimalSlotsGame */ = {
 			isa = PBXGroup;
 			children = (
+				03C692A527A9B7ED00F6CE62 /* Helpers */,
+				03C692A427A9B7E500F6CE62 /* Views */,
 				03C6929027A9B73F00F6CE62 /* AppDelegate.swift */,
 				03C6929227A9B73F00F6CE62 /* SceneDelegate.swift */,
-				03C6929427A9B73F00F6CE62 /* ContentView.swift */,
 				03C6929627A9B74300F6CE62 /* Assets.xcassets */,
 				03C6929B27A9B74300F6CE62 /* LaunchScreen.storyboard */,
 				03C6929E27A9B74300F6CE62 /* Info.plist */,
@@ -73,6 +74,21 @@
 				03C6929927A9B74300F6CE62 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		03C692A427A9B7E500F6CE62 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				03C6929427A9B73F00F6CE62 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		03C692A527A9B7ED00F6CE62 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
