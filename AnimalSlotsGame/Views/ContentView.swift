@@ -9,6 +9,35 @@ import SwiftUI
 
 struct ContentView: View {
     
+    //Create Array to Hold all the slot images
+    
+    let images = ["sloth","seven","monkey","lion","racoon"]
+    
+    /* Creating an array for each slot:
+     * Index 0 = Slot On Top
+     * Index 1 = Slot On Bottom Left
+     * Index 2 = Slot On Bottom Right
+     */
+    @State private var slots: Array = [0,1,2]
+    
+    
+    
+    /* Functions which will handle the following:
+     * 1. Spin the slots
+     * 2. Check to see if the player won
+     * 3. Display message if player wins, and update coin count
+     * 4. End game if player loses all coins, or doesnt have enough funds
+     */
+    
+    // 1. Spin the slots
+    func spinSlots(){
+        slots[0] = Int.random(in: 0...images.count - 1)
+        slots[1] = Int.random(in: 0...images.count - 1)
+        slots[2] = Int.random(in: 0...images.count - 1)
+    }
+    
+    
+    
     var body: some View {
         ZStack{
             
@@ -45,7 +74,7 @@ struct ContentView: View {
                     // Slot 1
                     ZStack{
                         SlotsView()
-                        Image("slotframe")
+                        Image(images[slots[0]])
                             .resizable()
                             .modifier(ImageModifier())
                             
@@ -55,7 +84,7 @@ struct ContentView: View {
                         // SLot 2
                         ZStack{
                             SlotsView()
-                            Image("slotframe")
+                            Image(images[slots[1]])
                                 .resizable()
                                 .modifier(ImageModifier())
                                 
@@ -65,7 +94,7 @@ struct ContentView: View {
                         // SLot 3
                         ZStack{
                             SlotsView()
-                            Image("slotframe")
+                            Image(images[slots[2]])
                                 .resizable()
                                 .modifier(ImageModifier())
                                 
@@ -73,12 +102,11 @@ struct ContentView: View {
                         
                     }
                     
-                    
-                    
-                    
                     // Spin Button
                     Button(action: {
                         print("Spining Slots")
+                        //Spin the slots
+                        self.spinSlots()
                     }){
                         Image("spin")
                             .renderingMode(.original)
