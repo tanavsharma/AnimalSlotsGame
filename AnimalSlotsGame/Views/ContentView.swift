@@ -38,6 +38,47 @@ struct ContentView: View {
                 )
                 
                 // SLOTS
+                VStack(alignment: .center, spacing: 0){
+                    
+                    // Slot 1
+                    ZStack{
+                        SlotsView()
+                        Image("slotframe")
+                            .resizable()
+                            .modifier(ImageModifier())
+                            
+                    }
+                    
+                    HStack(alignment: .center, spacing: 0){
+                        
+                        ZStack{
+                            SlotsView()
+                            Image("slotframe")
+                                .resizable()
+                                .modifier(ImageModifier())
+                                
+                        }
+                        
+                        Spacer()
+                        
+                        ZStack{
+                            SlotsView()
+                            Image("slotframe")
+                                .resizable()
+                                .modifier(ImageModifier())
+                                
+                        }
+                        
+                    }
+                    
+                    // Slot 2
+                    
+                    // Slot 3
+                    
+                    // Spin Button
+                    
+                }
+                .layoutPriority(2)
                 
                 // FUNCTIONS
                

@@ -15,6 +15,8 @@
 		03C6929D27A9B74300F6CE62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C6929B27A9B74300F6CE62 /* LaunchScreen.storyboard */; };
 		03CE011427A9CA8000AAEC7E /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011327A9CA8000AAEC7E /* LogoView.swift */; };
 		03CE011627A9D08200AAEC7E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011527A9D08200AAEC7E /* Extensions.swift */; };
+		03CE011827A9D4A700AAEC7E /* SlotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011727A9D4A700AAEC7E /* SlotsView.swift */; };
+		03CE011A27A9D73D00AAEC7E /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011927A9D73D00AAEC7E /* Modifiers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		03C6929E27A9B74300F6CE62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03CE011327A9CA8000AAEC7E /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		03CE011527A9D08200AAEC7E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		03CE011727A9D4A700AAEC7E /* SlotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsView.swift; sourceTree = "<group>"; };
+		03CE011927A9D73D00AAEC7E /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 			children = (
 				03C6929427A9B73F00F6CE62 /* ContentView.swift */,
 				03CE011327A9CA8000AAEC7E /* LogoView.swift */,
+				03CE011727A9D4A700AAEC7E /* SlotsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -93,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				03CE011527A9D08200AAEC7E /* Extensions.swift */,
+				03CE011927A9D73D00AAEC7E /* Modifiers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -169,6 +175,8 @@
 			files = (
 				03CE011627A9D08200AAEC7E /* Extensions.swift in Sources */,
 				03C6929127A9B73F00F6CE62 /* AppDelegate.swift in Sources */,
+				03CE011A27A9D73D00AAEC7E /* Modifiers.swift in Sources */,
+				03CE011827A9D4A700AAEC7E /* SlotsView.swift in Sources */,
 				03CE011427A9CA8000AAEC7E /* LogoView.swift in Sources */,
 				03C6929327A9B73F00F6CE62 /* SceneDelegate.swift in Sources */,
 				03C6929527A9B73F00F6CE62 /* ContentView.swift in Sources */,
