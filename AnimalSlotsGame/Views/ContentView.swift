@@ -37,6 +37,8 @@ struct ContentView: View {
                         .foregroundColor(Color("informationBg"))
                 )
                 
+                Spacer()
+                
                 // SLOTS
                 VStack(alignment: .center, spacing: 0){
                     
@@ -50,7 +52,7 @@ struct ContentView: View {
                     }
                     
                     HStack(alignment: .center, spacing: 0){
-                        
+                        // SLot 2
                         ZStack{
                             SlotsView()
                             Image("slotframe")
@@ -60,7 +62,7 @@ struct ContentView: View {
                         }
                         
                         Spacer()
-                        
+                        // SLot 3
                         ZStack{
                             SlotsView()
                             Image("slotframe")
@@ -71,11 +73,18 @@ struct ContentView: View {
                         
                     }
                     
-                    // Slot 2
                     
-                    // Slot 3
+                    
                     
                     // Spin Button
+                    Button(action: {
+                        print("Spining Slots")
+                    }){
+                        Image("spin")
+                            .renderingMode(.original)
+                            .resizable()
+                            .modifier(ImageModifier())
+                    }
                     
                 }
                 .layoutPriority(2)
@@ -122,11 +131,68 @@ struct ContentView: View {
                     )
                 }
                 
-                
+            
                 // FOOTER
-                
                 Spacer()
+                
+                HStack{
+                    
+                    HStack{
+                        //Button - Bet 10
+                        Button(action: {
+                            print("You bet 10!")
+                        }){
+                            Text("Press\nTo Bet")
+                                .labelStyle()
+                                .multilineTextAlignment(.trailing)
+                            
+                            Text("10")
+                                .numberStyle()
+                                .layoutPriority(1)
+                        }
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 8)
+                        .frame(minWidth: 128)
+                        .background(
+                            Capsule()
+                                .foregroundColor(Color("informationBg"))
+                        )
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    HStack{
+                        //Button - Bet 100
+                        Button(action: {
+                            print("You bet 100!")
+                        }){
+                            Text("100")
+                                .numberStyle()
+                                .layoutPriority(1)
+                            
+                            Text("Press\nTo Bet")
+                                .labelStyle()
+                                .multilineTextAlignment(.leading)
+                            
+                            
+                        }
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 8)
+                        .frame(minWidth: 128)
+                        .background(
+                            Capsule()
+                                .foregroundColor(Color("informationBg"))
+                        )
+                        
+                    }
+                    
+                }
+                Spacer()
+                Spacer()
+                
             }
+            
             // BUTTONS
             .padding()
             .frame(maxWidth: 720)
