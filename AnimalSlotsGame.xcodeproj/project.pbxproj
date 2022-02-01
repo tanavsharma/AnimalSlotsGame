@@ -13,6 +13,8 @@
 		03C6929727A9B74300F6CE62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03C6929627A9B74300F6CE62 /* Assets.xcassets */; };
 		03C6929A27A9B74300F6CE62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03C6929927A9B74300F6CE62 /* Preview Assets.xcassets */; };
 		03C6929D27A9B74300F6CE62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C6929B27A9B74300F6CE62 /* LaunchScreen.storyboard */; };
+		03CE011427A9CA8000AAEC7E /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011327A9CA8000AAEC7E /* LogoView.swift */; };
+		03CE011627A9D08200AAEC7E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011527A9D08200AAEC7E /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		03C6929927A9B74300F6CE62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		03C6929C27A9B74300F6CE62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03C6929E27A9B74300F6CE62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03CE011327A9CA8000AAEC7E /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
+		03CE011527A9D08200AAEC7E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				03C6929427A9B73F00F6CE62 /* ContentView.swift */,
+				03CE011327A9CA8000AAEC7E /* LogoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -87,6 +92,7 @@
 		03C692A527A9B7ED00F6CE62 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				03CE011527A9D08200AAEC7E /* Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -161,7 +167,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03CE011627A9D08200AAEC7E /* Extensions.swift in Sources */,
 				03C6929127A9B73F00F6CE62 /* AppDelegate.swift in Sources */,
+				03CE011427A9CA8000AAEC7E /* LogoView.swift in Sources */,
 				03C6929327A9B73F00F6CE62 /* SceneDelegate.swift in Sources */,
 				03C6929527A9B73F00F6CE62 /* ContentView.swift in Sources */,
 			);
