@@ -11,10 +11,10 @@ struct ContentView: View {
     
     //Create Array to Hold all the slot images
     
-    let images = ["sloth","monkey","lion", "racoon","seven"]
+    let images = ["sloth","sloth","monkey","lion","lion", "racoon","seven"]
     
     @State private var showingAlert = false
-    @State private var coins: Int = 10
+    @State private var coins: Int = 2500
     @State private var betAmount: Int = 10
     
     /* Creating an array for each slot:
@@ -57,8 +57,9 @@ struct ContentView: View {
     
     func playerLoses(){
         coins -= betAmount
-        if betAmount <= 0{
+        if coins <= 0{
             // End Game - reset score
+            showingAlert = true
             
         }else{
             // do nothing
@@ -96,7 +97,7 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                // SLOTS
+                //SLOTS
                 VStack(alignment: .center, spacing: 0){
                     
                     // Slot 1
@@ -142,7 +143,6 @@ struct ContentView: View {
                             .resizable()
                             .modifier(ImageModifier())
                     }
-                    
                 }
                 .layoutPriority(2)
                 
