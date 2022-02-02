@@ -11,7 +11,11 @@ struct ContentView: View {
     
     //Create Array to Hold all the slot images
     
-    let images = ["sloth","seven","monkey","lion","racoon"]
+    let images = ["sloth","monkey","lion", "racoon","seven"]
+    
+    @State private var showingAlert = false
+    @State private var coins: Int = 10
+    @State private var betAmount: Int = 10
     
     /* Creating an array for each slot:
      * Index 0 = Slot On Top
@@ -20,8 +24,6 @@ struct ContentView: View {
      */
     @State private var slots: Array = [0,1,2]
     
-    
-    
     /* Functions which will handle the following:
      * 1. Spin the slots
      * 2. Check to see if the player won
@@ -29,13 +31,39 @@ struct ContentView: View {
      * 4. End game if player loses all coins, or doesnt have enough funds
      */
     
+    
     // 1. Spin the slots
     func spinSlots(){
-        slots[0] = Int.random(in: 0...images.count - 1)
-        slots[1] = Int.random(in: 0...images.count - 1)
-        slots[2] = Int.random(in: 0...images.count - 1)
+        slots = slots.map({ _ in
+            Int.random(in: 0...images.count - 1)
+        })
     }
     
+    // 2. Check To See if the player won
+    func checkWinning(){
+        if slots[0] == slots[1] && slots[1] == slots[2] && slots[0] == slots[2] {
+            // 3. Display Message if player wins and adjust coins
+            self.playerWins()
+        }else{
+            // Player Looses
+            playerLoses()
+        }
+        
+    }
+    
+    func playerWins(){
+        coins += betAmount * 10
+    }
+    
+    func playerLoses(){
+        coins -= betAmount
+        if betAmount <= 0{
+            // End Game - reset score
+            
+        }else{
+            // do nothing
+        }
+    }
     
     
     var body: some View {
@@ -107,6 +135,7 @@ struct ContentView: View {
                         print("Spining Slots")
                         //Spin the slots
                         self.spinSlots()
+                        self.checkWinning()
                     }){
                         Image("spin")
                             .renderingMode(.original)
@@ -121,12 +150,13 @@ struct ContentView: View {
                
                 // USER INFORMATION
                 HStack{
+                    //Your total Coins
                     HStack{
                         Text("Your\nCoins".uppercased())
                             .labelStyle()
                             .multilineTextAlignment(.trailing)
                         
-                        Text("2500")
+                        Text("\(coins)")
                             .numberStyle()
                             .layoutPriority(1)
                     }
@@ -139,9 +169,9 @@ struct ContentView: View {
                     )
                     
                     Spacer()
-                    
+                    // Your Bet
                     HStack{
-                        Text("100")
+                        Text("\(betAmount)")
                             .numberStyle()
                             .layoutPriority(1)
                         
@@ -169,6 +199,7 @@ struct ContentView: View {
                         //Button - Bet 10
                         Button(action: {
                             print("You bet 10!")
+                            betAmount = 10
                         }){
                             Text("Press\nTo Bet")
                                 .labelStyle()
@@ -194,6 +225,7 @@ struct ContentView: View {
                         //Button - Bet 100
                         Button(action: {
                             print("You bet 100!")
+                            betAmount = 100
                         }){
                             Text("100")
                                 .numberStyle()
