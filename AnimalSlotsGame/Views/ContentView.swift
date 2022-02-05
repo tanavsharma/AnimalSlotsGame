@@ -62,7 +62,7 @@ struct ContentView: View {
     // Game Over Popup
     func gameOver(){
         if coins <= 0{
-            //Modal Window
+            //Modal Windo
         }
         
         
