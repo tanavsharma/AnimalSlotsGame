@@ -65,15 +65,8 @@ struct ContentView: View {
     // Game Over Popup
     func gameOver(){
         if coins <= 0{
-            //Modal Window
             showingModal = true
-            
-            //
         }
-        
-        
-        
-        
     }
     
     
@@ -279,6 +272,56 @@ struct ContentView: View {
             if $showingModal.wrappedValue {
                 ZStack{
                     Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
+                    
+                    //Title - Game Over
+                    VStack(spacing: 0){
+                        Text("Game Over")
+                            .font(.system(.title,design: .rounded))
+                            .fontWeight(.heavy)
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(Color("informationBg"))
+                            .foregroundColor(Color.white)
+                        Spacer()
+                        
+                    //Message
+                        VStack(alignment: .center, spacing: 16){
+                            Text("Sorry! You are out of coins. \n Restart the game to continue playing.")
+                                .font(.system(.body,design: .rounded))
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color.gray)
+                                .layoutPriority(1)
+                        }
+                        
+                        Spacer()
+                        
+                        //Button - Restart the game
+                        Button(action:{
+                            self.showingModal = false
+                            self.coins = 2500
+                        }){
+                            Text("RESTART")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.semibold)
+                                .accentColor(Color("informationBg"))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .frame(minWidth: 128)
+                                .background(
+                                    Capsule()
+                                        .strokeBorder(lineWidth: 1.75)
+                                        .foregroundColor(Color("informationBg"))
+                                )
+                            
+                        }
+                    
+                        Spacer()
+                        
+                    }
+                    .frame(minWidth: 280, idealWidth: 280, maxWidth: 320, minHeight: 200, idealHeight: 220, maxHeight: 320, alignment: .center)
+                    .background(Color.white)
+                    .cornerRadius(20)
                 }
             }
         }
