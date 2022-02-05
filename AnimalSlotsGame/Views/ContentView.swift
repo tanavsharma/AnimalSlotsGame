@@ -28,21 +28,21 @@ struct ContentView: View {
     @State private var slots: Array = [0,1,2]
     
     /* Functions which will handle the following:
-     * 1. Spin the slots
-     * 2. Check to see if the player won
-     * 3. Display message if player wins, and update coin count
-     * 4. End game if player loses all coins, or doesnt have enough funds
+     * Spin the slots
+     * Check to see if the player won
+     * Display message if player wins, and update coin count
+     * End game if player loses all coins, or doesnt have enough funds
      */
     
     
-    // 1. Spin the slots
+    // Spin the slots
     func spinSlots(){
         slots = slots.map({ _ in
             Int.random(in: 0...images.count - 1)
         })
     }
     
-    // 2. Check To See if the player won
+    // Check To See if the player won
     func checkWinning(){
         if slots[0] == slots[1] && slots[1] == slots[2] && slots[0] == slots[2] {
             // 3. Display Message if player wins and adjust coins
@@ -60,6 +60,14 @@ struct ContentView: View {
     
     func playerLoses(){
         coins -= betAmount
+    }
+    
+    func checkBetAmount(){
+        if betAmount == 100{
+            if coins < betAmount{
+                betAmount = 10
+            }
+        }
     }
     
     // Game Over Popup
@@ -142,6 +150,7 @@ struct ContentView: View {
                         self.spinSlots()
                         self.checkWinning()
                         self.gameOver()
+                        self.checkBetAmount()
                     }){
                         Image("spin")
                             .renderingMode(.original)
