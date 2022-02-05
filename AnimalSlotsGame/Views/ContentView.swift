@@ -19,7 +19,7 @@ struct ContentView: View {
     // Creating variables
     @State private var jackpot: Int = 25000
     @State private var showingAlert = false
-    @State private var coins: Int = 2500
+    @State private var coins: Int = 100
     @State private var betAmount: Int = 10
     @State private var amountOne: Int = 0
     @State private var showingModal: Bool = false
@@ -260,6 +260,7 @@ struct ContentView: View {
                             Capsule()
                                 .foregroundColor(Color("informationBg"))
                         )
+                        .blur(radius: coins < 10 ? 3 : 0, opaque: false)
                         .disabled(coins < 10) //coin count below 10, disable the button
                         
                     }
@@ -288,6 +289,7 @@ struct ContentView: View {
                             Capsule()
                                 .foregroundColor(Color("informationBg"))
                         )
+                        .blur(radius: coins < 100 ? 3 : 0, opaque: false)
                         .disabled(coins < 100) // coin count below 100, disable the button
                     }
                     
