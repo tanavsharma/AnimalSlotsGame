@@ -229,7 +229,7 @@ struct ContentView: View {
                             Capsule()
                                 .foregroundColor(Color("informationBg"))
                         )
-                        .disabled(coins < 10)
+                        .disabled(coins < 10) //coin count below 10, disable the button
                         
                     }
                     
@@ -258,7 +258,8 @@ struct ContentView: View {
                             Capsule()
                                 .foregroundColor(Color("informationBg"))
                         )
-                        .disabled(coins < 100)
+                        .disabled(coins < 100) // coin count below 100, disable the button
+                        
                         
                         
                     }
