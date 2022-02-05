@@ -63,6 +63,8 @@ struct ContentView: View {
     func gameOver(){
         if coins <= 0{
             //Modal Window
+            
+            // 
         }
         
         
