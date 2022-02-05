@@ -57,14 +57,19 @@ struct ContentView: View {
     
     func playerLoses(){
         coins -= betAmount
-        if coins <= 0{
-            // End Game - reset score
-            showingAlert = true
-            
-        }else{
-            // do nothing
-        }
     }
+    
+    // Game Over Popup
+    func gameOver(){
+        if coins <= 0{
+            //Modal Window
+        }
+        
+        
+        
+        
+    }
+    
     
     
     var body: some View {
@@ -137,6 +142,7 @@ struct ContentView: View {
                         //Spin the slots
                         self.spinSlots()
                         self.checkWinning()
+                        self.gameOver()
                     }){
                         Image("spin")
                             .renderingMode(.original)
