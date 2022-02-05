@@ -16,6 +16,9 @@ struct ContentView: View {
     @State private var showingAlert = false
     @State private var coins: Int = 2500
     @State private var betAmount: Int = 10
+    @State private var showingModal: Bool = false
+    @State private var disabledBtn: Bool = false
+    
     
     /* Creating an array for each slot:
      * Index 0 = Slot On Top
@@ -63,8 +66,9 @@ struct ContentView: View {
     func gameOver(){
         if coins <= 0{
             //Modal Window
+            showingModal = true
             
-            // 
+            //
         }
         
         
@@ -153,6 +157,7 @@ struct ContentView: View {
                     }
                 }
                 .layoutPriority(2)
+                .disabled(coins <= 0)
                 
                 // FUNCTIONS
                
@@ -224,6 +229,7 @@ struct ContentView: View {
                             Capsule()
                                 .foregroundColor(Color("informationBg"))
                         )
+                        .disabled(coins < 10)
                         
                     }
                     
@@ -252,6 +258,8 @@ struct ContentView: View {
                             Capsule()
                                 .foregroundColor(Color("informationBg"))
                         )
+                        .disabled(coins < 100)
+                        
                         
                     }
                     
@@ -264,8 +272,14 @@ struct ContentView: View {
             // BUTTONS
             .padding()
             .frame(maxWidth: 720)
+            .blur(radius: $showingModal.wrappedValue ? 5 : 0, opaque: false)
             
             //POP-UP
+            if $showingModal.wrappedValue {
+                ZStack{
+                    Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
+                }
+            }
         }
         // BACKGROUND
         .background(Image("background"))
