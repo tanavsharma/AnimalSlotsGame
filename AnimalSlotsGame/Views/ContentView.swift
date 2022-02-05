@@ -9,14 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     
+    //MARK: Variable Declaration
+    
     //Create Array to Hold all the slot images
     
     let images = ["sloth","sloth","monkey","lion","lion", "racoon","seven"]
     
+    // Creating variables
     @State private var showingAlert = false
     @State private var coins: Int = 2500
     @State private var betAmount: Int = 10
+    @State private var amountOne: Int = 0
     @State private var showingModal: Bool = false
+    @State private var showingWinAmount: Bool = false
     @State private var disabledBtn: Bool = false
     
     
@@ -27,6 +32,9 @@ struct ContentView: View {
      */
     @State private var slots: Array = [0,1,2]
     
+    
+    // MARK: Functions
+    
     /* Functions which will handle the following:
      * Spin the slots
      * Check to see if the player won
@@ -35,7 +43,7 @@ struct ContentView: View {
      */
     
     
-    // Spin the slots
+    // MARK: Spin the slots
     func spinSlots(){
         slots = slots.map({ _ in
             Int.random(in: 0...images.count - 1)
@@ -45,19 +53,20 @@ struct ContentView: View {
     // Check To See if the player won
     func checkWinning(){
         if slots[0] == slots[1] && slots[1] == slots[2] && slots[0] == slots[2] {
-            // 3. Display Message if player wins and adjust coins
             self.playerWins()
         }else{
-            // Player Looses
             playerLoses()
         }
-        
     }
     
+    // MARK: Player Wins
     func playerWins(){
         coins += betAmount * 10
+        amountOne = betAmount * 10
+        showingWinAmount = true
     }
     
+    // MARK: Player Loses
     func playerLoses(){
         coins -= betAmount
     }
@@ -82,7 +91,7 @@ struct ContentView: View {
     var body: some View {
         ZStack{
             
-            //MAIN USER INTERFACE
+            //MARK: MAIN USER INTERFACE
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 5) {
                 // HEADER - APP LOGO
                 LogoView()
@@ -145,7 +154,6 @@ struct ContentView: View {
                     
                     // Spin Button
                     Button(action: {
-                        print("Spining Slots")
                         //Spin the slots
                         self.spinSlots()
                         self.checkWinning()
@@ -213,7 +221,6 @@ struct ContentView: View {
                     HStack{
                         //Button - Bet 10
                         Button(action: {
-                            print("You bet 10!")
                             betAmount = 10
                         }){
                             Text("Press\nTo Bet")
@@ -240,7 +247,6 @@ struct ContentView: View {
                     HStack{
                         //Button - Bet 100
                         Button(action: {
-                            print("You bet 100!")
                             betAmount = 100
                         }){
                             Text("100")
@@ -261,9 +267,6 @@ struct ContentView: View {
                                 .foregroundColor(Color("informationBg"))
                         )
                         .disabled(coins < 100) // coin count below 100, disable the button
-                        
-                        
-                        
                     }
                     
                 }
@@ -277,7 +280,7 @@ struct ContentView: View {
             .frame(maxWidth: 720)
             .blur(radius: $showingModal.wrappedValue ? 5 : 0, opaque: false)
             
-            //POP-UP
+            //MARK: POP-UP for Game Over
             if $showingModal.wrappedValue {
                 ZStack{
                     Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
@@ -311,6 +314,62 @@ struct ContentView: View {
                             self.coins = 2500
                         }){
                             Text("RESTART")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.semibold)
+                                .accentColor(Color("informationBg"))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .frame(minWidth: 128)
+                                .background(
+                                    Capsule()
+                                        .strokeBorder(lineWidth: 1.75)
+                                        .foregroundColor(Color("informationBg"))
+                                )
+                            
+                        }
+                    
+                        Spacer()
+                        
+                    }
+                    .frame(minWidth: 280, idealWidth: 280, maxWidth: 320, minHeight: 200, idealHeight: 220, maxHeight: 320, alignment: .center)
+                    .background(Color.white)
+                    .cornerRadius(20)
+                }
+            }
+            
+            //MARK: POP-UP for Game Win
+            if $showingWinAmount.wrappedValue {
+                ZStack{
+                    Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
+                    
+                    //Title - Game Over
+                    VStack(spacing: 0){
+                        Text("Congratulations!")
+                            .font(.system(.title,design: .rounded))
+                            .fontWeight(.heavy)
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(Color("informationBg"))
+                            .foregroundColor(Color.white)
+                        Spacer()
+                        
+                    //Message
+                        VStack(alignment: .center, spacing: 16){
+                            Text("You Won $\(amountOne)")
+                                .font(.system(.body,design: .rounded))
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color.gray)
+                                .layoutPriority(1)
+                        }
+                        
+                        Spacer()
+                        
+                        //Button - Restart the game
+                        Button(action:{
+                            self.showingWinAmount = false
+                        }){
+                            Text("CONTINUE")
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
                                 .accentColor(Color("informationBg"))
