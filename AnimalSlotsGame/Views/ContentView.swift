@@ -19,7 +19,7 @@ struct ContentView: View {
     // Creating variables
     @State private var jackpot: Int = 25000
     @State private var showingAlert = false
-    @State private var coins: Int = 100
+    @State private var coins: Int = 2500
     @State private var betAmount: Int = 10
     @State private var amountOne: Int = 0
     @State private var showingModal: Bool = false
@@ -72,6 +72,7 @@ struct ContentView: View {
             if images[index] == "seven"{
                 //Jackpot Won
                 showingJackpotAmount = true
+                coins += jackpot
             }
             numberOfTries = 0
             self.playerWins()
@@ -447,7 +448,7 @@ struct ContentView: View {
                         
                         //Button - Restart the game
                         Button(action:{
-                            self.showingWinAmount = false
+                            self.showingJackpotAmount = false
                         }){
                             Text("CONTINUE")
                                 .font(.system(.body, design: .rounded))
