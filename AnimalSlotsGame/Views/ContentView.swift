@@ -19,6 +19,7 @@ struct ContentView: View {
     // Creating variables
     @State private var jackpot: Int = 25000
     @State private var showingAlert = false
+    @State private var showingReset = false
     @State private var coins: Int = 2500
     @State private var betAmount: Int = 10
     @State private var amountOne: Int = 0
@@ -301,7 +302,7 @@ struct ContentView: View {
                     HStack{
                         //MARK: Button - Quit
                         Button(action: {
-                            exit(0)
+                            showingAlert = true
                         }){
                             Text("Quit")
                                 .numberStyle()
@@ -310,12 +311,19 @@ struct ContentView: View {
                         .padding(.vertical, 2)
                         .padding(.horizontal, 8)
                         .frame(minWidth: 128)
+                        .alert(isPresented: $showingAlert){
+                            Alert(title: Text("Quit The Game?"),
+                                              message: Text("Are you sure you want to quit?"),
+                                              primaryButton: .destructive(Text("Yes")){
+                                                exit(0)
+                                              },
+                                              secondaryButton: .default(Text("No")))
+                        }
                         .background(
                             Capsule()
                                 .foregroundColor(Color("informationBg"))
                         )
-                        .blur(radius: coins < 10 ? 3 : 0, opaque: false)
-                        .disabled(coins < 10) //coin count below 10, disable the button
+
                         
                     }
                     
@@ -324,8 +332,7 @@ struct ContentView: View {
                     HStack{
                         //MARK: Button - Reset
                         Button(action: {
-                            betAmount = 10
-                            coins = 2500
+                            showingReset = true
                         }){
                             Text("Reset")
                                 .numberStyle()
@@ -338,8 +345,15 @@ struct ContentView: View {
                             Capsule()
                                 .foregroundColor(Color("informationBg"))
                         )
-                        .blur(radius: coins < 10 ? 3 : 0, opaque: false)
-                        .disabled(coins < 10) //coin count below 10, disable the button
+                        .alert(isPresented: $showingReset){
+                            Alert(title: Text("Reset The Game?"),
+                                              message: Text("Are you sure you want to Reset?"),
+                                              primaryButton: .destructive(Text("Yes")){
+                                                betAmount = 10
+                                                coins = 2500
+                                              },
+                                              secondaryButton: .default(Text("No")))
+                        }
                         
                     }
                     
