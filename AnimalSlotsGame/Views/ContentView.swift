@@ -296,7 +296,55 @@ struct ContentView: View {
                     
                 }
                 Spacer()
-                Spacer()
+                HStack{
+                    
+                    HStack{
+                        //MARK: Button - Quit
+                        Button(action: {
+                            exit(0)
+                        }){
+                            Text("Quit")
+                                .numberStyle()
+                                .layoutPriority(1)
+                        }
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 8)
+                        .frame(minWidth: 128)
+                        .background(
+                            Capsule()
+                                .foregroundColor(Color("informationBg"))
+                        )
+                        .blur(radius: coins < 10 ? 3 : 0, opaque: false)
+                        .disabled(coins < 10) //coin count below 10, disable the button
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    HStack{
+                        //MARK: Button - Reset
+                        Button(action: {
+                            betAmount = 10
+                            coins = 2500
+                        }){
+                            Text("Reset")
+                                .numberStyle()
+                                .layoutPriority(1)
+                        }
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 8)
+                        .frame(minWidth: 128)
+                        .background(
+                            Capsule()
+                                .foregroundColor(Color("informationBg"))
+                        )
+                        .blur(radius: coins < 10 ? 3 : 0, opaque: false)
+                        .disabled(coins < 10) //coin count below 10, disable the button
+                        
+                    }
+                    
+                }
+                
                 
             }
             
