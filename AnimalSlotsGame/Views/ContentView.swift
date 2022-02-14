@@ -18,14 +18,13 @@ struct ContentView: View {
     
     // Creating variables
     @State private var jackpot: Int = 25000
-    @State private var showingAlert = false
-    @State private var showingReset = false
     @State private var coins: Int = 2500
     @State private var betAmount: Int = 10
     @State private var amountOne: Int = 0
     @State private var showingModal: Bool = false
     @State private var showingWinAmount: Bool = false
     @State private var showingJackpotAmount: Bool = false
+    @State private var showingAlert: Bool = false
     @State private var disabledBtn: Bool = false
     @State private var numberOfTries = 0
     
@@ -121,6 +120,8 @@ struct ContentView: View {
                 // HEADER - APP LOGO
                 LogoView()
                 Spacer()
+                
+                
                 
                 //MARK: JACKPOT LABELS
                 HStack{
@@ -297,85 +298,17 @@ struct ContentView: View {
                     
                 }
                 Spacer()
-                HStack{
-                    
-                    HStack{
-                        //MARK: Button - Quit
-                        Button(action: {
-                            showingAlert = true
-                        }){
-                            Text("Quit")
-                                .numberStyle()
-                                .layoutPriority(1)
-                        }
-                        .padding(.vertical, 2)
-                        .padding(.horizontal, 8)
-                        .frame(minWidth: 128)
-                        .alert(isPresented: $showingAlert){
-                            Alert(title: Text("Quit The Game?"),
-                                              message: Text("Are you sure you want to quit?"),
-                                              primaryButton: .destructive(Text("Yes")){
-                                                exit(0)
-                                              },
-                                              secondaryButton: .default(Text("No")))
-                        }
-                        .background(
-                            Capsule()
-                                .foregroundColor(Color("informationBg"))
-                        )
-
-                        
-                    }
-                    
-                    Spacer()
-                    
-                    HStack{
-                        //MARK: Button - Reset
-                        Button(action: {
-                            showingReset = true
-                        }){
-                            Text("Reset")
-                                .numberStyle()
-                                .layoutPriority(1)
-                        }
-                        .padding(.vertical, 2)
-                        .padding(.horizontal, 8)
-                        .frame(minWidth: 128)
-                        .background(
-                            Capsule()
-                                .foregroundColor(Color("informationBg"))
-                        )
-                        .alert(isPresented: $showingReset){
-                            Alert(title: Text("Reset The Game?"),
-                                              message: Text("Are you sure you want to Reset?"),
-                                              primaryButton: .destructive(Text("Yes")){
-                                                betAmount = 10
-                                                coins = 2500
-                                              },
-                                              secondaryButton: .default(Text("No")))
-                        }
-                        
-                    }
-                    
-                }
-                
-                
             }
+            
             
             // BUTTONS
             .padding()
             .frame(maxWidth: 720)
             .blur(radius: $showingModal.wrappedValue ? 5 : 0, opaque: false)
+            .blur(radius: $showingWinAmount.wrappedValue ? 5 : 0, opaque: false)
+            .blur(radius: $showingJackpotAmount.wrappedValue ? 5 : 0, opaque: false)
+            .blur(radius: $showingAlert.wrappedValue ? 5 : 0, opaque: false)
             
-            
-            .overlay(
-                Button(action: {
-                    print("information")
-                }){
-                    Image(systemName: "info.circle")
-                }
-            
-            )
             //MARK: POP-UP for Game Over
             if $showingModal.wrappedValue {
                 ZStack{
@@ -542,14 +475,146 @@ struct ContentView: View {
                     .frame(minWidth: 280, idealWidth: 280, maxWidth: 320, minHeight: 200, idealHeight: 220, maxHeight: 320, alignment: .center)
                     .background(Color.white)
                     .cornerRadius(20)
+                    
                 }
             }
+            
+            //MARK: POP-UP for ALERT
+            
+            if $showingAlert.wrappedValue {
+                ZStack{
+                    //Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
+                    
+                    //Title - Game Over
+                    VStack(spacing: 0){
+                        Text("Animal Slots")
+                            .font(.system(.title,design: .rounded))
+                            .fontWeight(.heavy)
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(Color("informationBg"))
+                            .foregroundColor(Color.white)
+                        Spacer()
+                        
+                    //Message
+                        VStack(alignment: .center, spacing: 16){
+                            Text("Please Choose If you would like to:")
+                                .font(.system(.body,design: .rounded))
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color.gray)
+                                .layoutPriority(1)
+                        }
+                        
+                        Spacer()
+                        
+                        //MARK: ALERT RESTART
+                        Button(action:{
+                            self.showingAlert = false
+                            self.coins = 2500
+                        }){
+                            Text("RESTART")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.semibold)
+                                .accentColor(Color("informationBg"))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .frame(minWidth: 128)
+                                .background(
+                                    Capsule()
+                                        .strokeBorder(lineWidth: 1.75)
+                                        .foregroundColor(Color("informationBg"))
+                                )
+                            
+                        }
+                        
+                        Spacer()
+                        
+                        //MARK: ALERT QUIT
+                        Button(action:{
+                            self.showingAlert = false
+                            exit(0)
+                        }){
+                            Text("QUIT")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.semibold)
+                                .accentColor(Color("informationBg"))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .frame(minWidth: 128)
+                                .background(
+                                    Capsule()
+                                        .strokeBorder(lineWidth: 1.75)
+                                        .foregroundColor(Color("informationBg"))
+                                )
+                            
+                        }
+                        
+                        Spacer()
+                        
+                        //MARK: ALERT CANCEL
+                        Button(action:{
+                            self.showingAlert = false
+                        }){
+                            Text("CANCEL")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.semibold)
+                                .accentColor(Color("informationBg"))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .frame(minWidth: 128)
+                                .background(
+                                    Capsule()
+                                        .strokeBorder(lineWidth: 1.75)
+                                        .foregroundColor(Color("informationBg"))
+                                )
+                            
+                        }
+                    
+                        Spacer()
+                        
+                    }
+                    .frame(minWidth: 280, idealWidth: 280, maxWidth: 320, minHeight: 200, idealHeight: 220, maxHeight: 320, alignment: .center)
+                    .background(Color.white)
+                    .cornerRadius(20)
+                }
+
+                
+
+            }
+            
+            
+            
         }
+
         // BACKGROUND
         .background(Image("background"))
-
+        .overlay(
+            Button(action: {
+                showingAlert = true
+            }){
+                Image(systemName: "arrow.2.circlepath.circle")
+            }
+            .font(.title)
+            .accentColor(Color.white),
+            alignment: .topLeading
+        
+        )
+        .overlay(
+            Button(action: {
+                showingAlert = true
+            }){
+                Image(systemName: "info.circle")
+            }
+            .font(.title)
+            .accentColor(Color.white),
+            alignment: .topTrailing
+        )
+        .padding()
     }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
