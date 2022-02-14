@@ -367,6 +367,15 @@ struct ContentView: View {
             .frame(maxWidth: 720)
             .blur(radius: $showingModal.wrappedValue ? 5 : 0, opaque: false)
             
+            
+            .overlay(
+                Button(action: {
+                    print("information")
+                }){
+                    Image(systemName: "info.circle")
+                }
+            
+            )
             //MARK: POP-UP for Game Over
             if $showingModal.wrappedValue {
                 ZStack{
