@@ -17,6 +17,7 @@
 		03CE011627A9D08200AAEC7E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011527A9D08200AAEC7E /* Extensions.swift */; };
 		03CE011827A9D4A700AAEC7E /* SlotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011727A9D4A700AAEC7E /* SlotsView.swift */; };
 		03CE011A27A9D73D00AAEC7E /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CE011927A9D73D00AAEC7E /* Modifiers.swift */; };
+		03E7683F27BB163C0097FE89 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E7683E27BB163C0097FE89 /* InformationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		03CE011527A9D08200AAEC7E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		03CE011727A9D4A700AAEC7E /* SlotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsView.swift; sourceTree = "<group>"; };
 		03CE011927A9D73D00AAEC7E /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
+		03E7683E27BB163C0097FE89 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				03C6929427A9B73F00F6CE62 /* ContentView.swift */,
 				03CE011327A9CA8000AAEC7E /* LogoView.swift */,
 				03CE011727A9D4A700AAEC7E /* SlotsView.swift */,
+				03E7683E27BB163C0097FE89 /* InformationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03CE011627A9D08200AAEC7E /* Extensions.swift in Sources */,
+				03E7683F27BB163C0097FE89 /* InformationView.swift in Sources */,
 				03C6929127A9B73F00F6CE62 /* AppDelegate.swift in Sources */,
 				03CE011A27A9D73D00AAEC7E /* Modifiers.swift in Sources */,
 				03CE011827A9D4A700AAEC7E /* SlotsView.swift in Sources */,

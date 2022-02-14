@@ -21,12 +21,15 @@ struct ContentView: View {
     @State private var coins: Int = 2500
     @State private var betAmount: Int = 10
     @State private var amountOne: Int = 0
+    @State private var numberOfTries = 0
+    
     @State private var showingModal: Bool = false
     @State private var showingWinAmount: Bool = false
     @State private var showingJackpotAmount: Bool = false
     @State private var showingAlert: Bool = false
     @State private var disabledBtn: Bool = false
-    @State private var numberOfTries = 0
+    @State private var showingInfoView: Bool = false
+    
     
     /* Creating an array for each slot:
      * Index 0 = Slot On Top
@@ -602,7 +605,7 @@ struct ContentView: View {
         )
         .overlay(
             Button(action: {
-                showingAlert = true
+                self.showingInfoView = true
             }){
                 Image(systemName: "info.circle")
             }
@@ -611,7 +614,13 @@ struct ContentView: View {
             alignment: .topTrailing
         )
         .padding()
+        .frame(maxWidth: 720)
+        
+        .sheet(isPresented: $showingInfoView){
+            InformationView()
+        }
     }
+    
 }
 
 
