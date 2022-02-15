@@ -16,6 +16,7 @@ struct InformationView: View {
         //MARK: Start of VSTACK (1)
         VStack(alignment: .center, spacing: 10){
             LogoView()
+                .padding()
             
             Spacer()
             //MARK: How to play
@@ -42,6 +43,21 @@ struct InformationView: View {
                 
                 //MARK: Winnings
                 Section(header: Text("Winnings")){
+                    
+                    HStack{
+                        Image("racoon").resizable().frame(width: 40, height: 40)
+                        Image("racoon").resizable().frame(width: 40, height: 40)
+                        Image("racoon").resizable().frame(width: 40, height: 40)
+                        Text("Bet Amount x 5")
+                    }
+                    
+                    HStack{
+                        Image("monkey").resizable().frame(width: 40, height: 40)
+                        Image("monkey").resizable().frame(width: 40, height: 40)
+                        Image("monkey").resizable().frame(width: 40, height: 40)
+                        Text("Bet Amount x 7")
+                    }
+                    
                     HStack{
                         Image("sloth").resizable().frame(width: 40, height: 40)
                         Image("sloth").resizable().frame(width: 40, height: 40)
@@ -50,32 +66,19 @@ struct InformationView: View {
                     }
                     
                     HStack{
-                        Image("monkey").resizable().frame(width: 40, height: 40)
-                        Image("monkey").resizable().frame(width: 40, height: 40)
-                        Image("monkey").resizable().frame(width: 40, height: 40)
-                        Text("Bet Amount x 10")
-                    }
-                    
-                    HStack{
                         Image("lion").resizable().frame(width: 40, height: 40)
                         Image("lion").resizable().frame(width: 40, height: 40)
                         Image("lion").resizable().frame(width: 40, height: 40)
-                        Text("Bet Amount x 10")
-                    }
-                    
-                    HStack{
-                        Image("racoon").resizable().frame(width: 40, height: 40)
-                        Image("racoon").resizable().frame(width: 40, height: 40)
-                        Image("racoon").resizable().frame(width: 40, height: 40)
-                        Text("Bet Amount x 10")
+                        Text("Bet Amount x 14")
                     }
                     
                     HStack{
                         Image("seven").resizable().frame(width: 40, height: 40)
                         Image("seven").resizable().frame(width: 40, height: 40)
                         Image("seven").resizable().frame(width: 40, height: 40)
-                        Text("Bet Amount x 10 + Jackpot")
+                        Text("Jackpot")
                     }
+                    
                     
                 }
             }
@@ -84,7 +87,7 @@ struct InformationView: View {
             
         }
         //MARK: End of VSTACK (1)
-        .background(Image("background"))
+        .background(Color.white)
         
     }
     

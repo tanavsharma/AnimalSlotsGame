@@ -16,12 +16,14 @@ struct ContentView: View {
     let images = ["sloth","monkey","lion", "racoon","seven"]
     
     
+    
     // Creating variables
     @State private var jackpot: Int = 25000
     @State private var coins: Int = 2500
     @State private var betAmount: Int = 10
     @State private var amountOne: Int = 0
     @State private var numberOfTries = 0
+    @State private var highscore = 0
     
     @State private var showingModal: Bool = false
     @State private var showingWinAmount: Bool = false
@@ -72,13 +74,46 @@ struct ContentView: View {
         let hasAllItemsEqual = slots.dropFirst().allSatisfy({$0 == slots.first})
         if hasAllItemsEqual {
             let index = slots[0]
+            print(index)
+            //MARK: JACKPOT PAY OUT
             if images[index] == "seven"{
                 //Jackpot Won
                 showingJackpotAmount = true
                 coins += jackpot
             }
+            
+            //MARK: SLOTH PAY OUT
+            if images[index] == "sloth"{
+                showingWinAmount = true
+                coins += betAmount * 10
+                amountOne = betAmount * 10
+                
+            }
+            
+            //MARK: MONKEY PAY OUT
+            if images[index] == "monkey"{
+                showingWinAmount = true
+                coins += betAmount * 7
+                amountOne = betAmount * 7
+            }
+            
+            
+            //MARK: LION PAY OUT
+            if images[index] == "lion"{
+                coins += betAmount * 14
+                amountOne = betAmount * 14
+                showingWinAmount = true
+            }
+            
+            //MARK: RACOON PAY OUT
+            if images[index] == "racoon"{
+                coins += betAmount * 5
+                amountOne = betAmount * 5
+                showingWinAmount = true
+            }
+            
             numberOfTries = 0
-            self.playerWins()
+            //self.playerWins()
         }else{
             numberOfTries = numberOfTries + 1
             playerLoses()
@@ -301,6 +336,34 @@ struct ContentView: View {
                     
                 }
                 Spacer()
+                
+                HStack{
+                    
+                    HStack{
+                        //MARK: HIGHSCORE
+                        Button(action: {
+                            
+                        }){
+                            Text("HIGH\nSCORE")
+                                .highStyle()
+                                .multilineTextAlignment(.trailing)
+                            
+                            Text("10")
+                                .numberStyle()
+                                .layoutPriority(1)
+                        }
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 8)
+                        .frame(minWidth: 128)
+                        .background(
+                            Capsule()
+                                .foregroundColor(Color("informationBg"))
+                        )
+                        .blur(radius: coins < 10 ? 3 : 0, opaque: false)
+                        .disabled(coins < 10) //coin count below 10, disable the button
+                        
+                    }
+                }
             }
             
             
@@ -315,7 +378,7 @@ struct ContentView: View {
             //MARK: POP-UP for Game Over
             if $showingModal.wrappedValue {
                 ZStack{
-                    Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
+                    
                     
                     //Title - Game Over
                     VStack(spacing: 0){
@@ -372,7 +435,7 @@ struct ContentView: View {
             //MARK: POP-UP for Game Win
             if $showingWinAmount.wrappedValue {
                 ZStack{
-                    Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
+                    
                     
                     //Title - Game Over
                     VStack(spacing: 0){
@@ -428,7 +491,7 @@ struct ContentView: View {
             //MARK: POP-UP for Jackpot Win
             if $showingJackpotAmount.wrappedValue {
                 ZStack{
-                    Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
+                    
                     
                     //Title - Game Over
                     VStack(spacing: 0){
@@ -486,7 +549,7 @@ struct ContentView: View {
             
             if $showingAlert.wrappedValue {
                 ZStack{
-                    //Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)).edgesIgnoringSafeArea(.all)
+                    
                     
                     //Title - Game Over
                     VStack(spacing: 0){
