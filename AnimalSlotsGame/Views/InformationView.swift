@@ -13,24 +13,79 @@ struct InformationView: View {
     
     
     var body: some View {
+        //MARK: Start of VSTACK (1)
         VStack(alignment: .center, spacing: 10){
             LogoView()
             
             Spacer()
-        }
-        .padding()
-        .background(Image("background"))
-        .overlay(
-            Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-            }){
-                Image(systemName: "chevron.left")
+            //MARK: How to play
+            Form {
+                Section(header: Text("How to Play?")){
+                    HStack{
+                        Text("Step 1:").foregroundColor(Color.gray)
+                        Spacer()
+                        Text("Pick bet amount of $10 or $100")
+                    }
+                    
+                    HStack{
+                        Text("Step 2:").foregroundColor(Color.gray)
+                        Spacer()
+                        Text("Press Spin Button")
+                    }
+                    
+                    HStack{
+                        Text("Step 3:").foregroundColor(Color.gray)
+                        Spacer()
+                        Text("Repeat")
+                    }
+                }
+                
+                //MARK: Winnings
+                Section(header: Text("Winnings")){
+                    HStack{
+                        Image("sloth").resizable().frame(width: 40, height: 40)
+                        Image("sloth").resizable().frame(width: 40, height: 40)
+                        Image("sloth").resizable().frame(width: 40, height: 40)
+                        Text("Bet Amount x 10")
+                    }
+                    
+                    HStack{
+                        Image("monkey").resizable().frame(width: 40, height: 40)
+                        Image("monkey").resizable().frame(width: 40, height: 40)
+                        Image("monkey").resizable().frame(width: 40, height: 40)
+                        Text("Bet Amount x 10")
+                    }
+                    
+                    HStack{
+                        Image("lion").resizable().frame(width: 40, height: 40)
+                        Image("lion").resizable().frame(width: 40, height: 40)
+                        Image("lion").resizable().frame(width: 40, height: 40)
+                        Text("Bet Amount x 10")
+                    }
+                    
+                    HStack{
+                        Image("racoon").resizable().frame(width: 40, height: 40)
+                        Image("racoon").resizable().frame(width: 40, height: 40)
+                        Image("racoon").resizable().frame(width: 40, height: 40)
+                        Text("Bet Amount x 10")
+                    }
+                    
+                    HStack{
+                        Image("seven").resizable().frame(width: 40, height: 40)
+                        Image("seven").resizable().frame(width: 40, height: 40)
+                        Image("seven").resizable().frame(width: 40, height: 40)
+                        Text("Bet Amount x 10 + Jackpot")
+                    }
+                    
+                }
             }
-            .font(.title)
-            .accentColor(Color.white),
-            alignment: .topLeading
-        )
-        .padding()
+            .font(.system(.body,design: .rounded))
+            
+            
+        }
+        //MARK: End of VSTACK (1)
+        .background(Image("background"))
+        
     }
     
     
