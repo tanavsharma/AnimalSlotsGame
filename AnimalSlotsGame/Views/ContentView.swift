@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ContentView: View {
     
@@ -15,7 +16,7 @@ struct ContentView: View {
     
     let images = ["sloth","monkey","lion", "racoon","seven"]
     
-    @State private var highscores: Array = []
+    @State private var highscores: [Int] = []
 
     // Creating variables
     @State private var jackpot: Int = 25000
@@ -32,6 +33,8 @@ struct ContentView: View {
     @State private var disabledBtn: Bool = false
     @State private var showingInfoView: Bool = false
     
+    //Database Handlers
+    private let database = Database.database().reference()
     
     /* Creating an array for each slot:
      * Index 0 = Slot On Top
@@ -82,7 +85,7 @@ struct ContentView: View {
                 coins += jackpot
                 amountOne = jackpot
                 highscores.append(amountOne)
-                print(highscores)
+                
             }
             
             //MARK: SLOTH PAY OUT
@@ -91,7 +94,7 @@ struct ContentView: View {
                 coins += betAmount * 10
                 amountOne = betAmount * 10
                 highscores.append(amountOne)
-                print(highscores)
+                
             }
             
             //MARK: MONKEY PAY OUT
@@ -100,7 +103,7 @@ struct ContentView: View {
                 coins += betAmount * 7
                 amountOne = betAmount * 7
                 highscores.append(amountOne)
-                print(highscores)
+               
             }
             
             
@@ -110,7 +113,7 @@ struct ContentView: View {
                 amountOne = betAmount * 14
                 showingWinAmount = true
                 highscores.append(amountOne)
-                print(highscores)
+                
             }
             
             //MARK: RACOON PAY OUT
@@ -119,7 +122,7 @@ struct ContentView: View {
                 amountOne = betAmount * 5
                 showingWinAmount = true
                 highscores.append(amountOne)
-                print(highscores)
+                
             }
 
             numberOfTries = 0
@@ -133,8 +136,17 @@ struct ContentView: View {
     
     //MARK: HIGHSCORE CALCULATOR
     func highScoreCalculator(){
-        //let highscore = highscores.reduce(0, +)
-        //print(highscore)
+        var payouts: [String:Int] = [:]
+        highscore = highscores.reduce(0, +)
+        print(highscore)
+        
+        payouts["Highest Payout"] = highscore
+        database.child("Payouts").setValue(payouts)
+    }
+    
+    func addHStoDB(){
+        //Empty Dict to hold highscore
+
     }
     
     
@@ -234,6 +246,7 @@ struct ContentView: View {
                         self.checkWinning()
                         self.gameOver()
                         self.checkBetAmount()
+                        self.highScoreCalculator()
                     }){
                         Image("spin")
                             .renderingMode(.original)
@@ -353,13 +366,13 @@ struct ContentView: View {
                     HStack{
                         //MARK: HIGHSCORE
                         Button(action: {
-                            
+                            print("hs=",highscore)
                         }){
                             Text("HIGH\nSCORE")
                                 .highStyle()
                                 .multilineTextAlignment(.trailing)
                             
-                            Text("10")
+                            Text("\(highscore)")
                                 .numberStyle()
                                 .layoutPriority(1)
                         }
