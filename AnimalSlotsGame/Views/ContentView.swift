@@ -15,8 +15,8 @@ struct ContentView: View {
     
     let images = ["sloth","monkey","lion", "racoon","seven"]
     
-    
-    
+    @State private var highscores: Array = []
+
     // Creating variables
     @State private var jackpot: Int = 25000
     @State private var coins: Int = 2500
@@ -80,6 +80,9 @@ struct ContentView: View {
                 //Jackpot Won
                 showingJackpotAmount = true
                 coins += jackpot
+                amountOne = jackpot
+                highscores.append(amountOne)
+                print(highscores)
             }
             
             //MARK: SLOTH PAY OUT
@@ -87,7 +90,8 @@ struct ContentView: View {
                 showingWinAmount = true
                 coins += betAmount * 10
                 amountOne = betAmount * 10
-                
+                highscores.append(amountOne)
+                print(highscores)
             }
             
             //MARK: MONKEY PAY OUT
@@ -95,6 +99,8 @@ struct ContentView: View {
                 showingWinAmount = true
                 coins += betAmount * 7
                 amountOne = betAmount * 7
+                highscores.append(amountOne)
+                print(highscores)
             }
             
             
@@ -103,6 +109,8 @@ struct ContentView: View {
                 coins += betAmount * 14
                 amountOne = betAmount * 14
                 showingWinAmount = true
+                highscores.append(amountOne)
+                print(highscores)
             }
             
             //MARK: RACOON PAY OUT
@@ -110,22 +118,25 @@ struct ContentView: View {
                 coins += betAmount * 5
                 amountOne = betAmount * 5
                 showingWinAmount = true
+                highscores.append(amountOne)
+                print(highscores)
             }
-            
+
             numberOfTries = 0
-            //self.playerWins()
+            
         }else{
             numberOfTries = numberOfTries + 1
             playerLoses()
         }
     }
     
-    // MARK: Player Wins
-    func playerWins(){
-        coins += betAmount * 10
-        amountOne = betAmount * 10
-        showingWinAmount = true
+    
+    //MARK: HIGHSCORE CALCULATOR
+    func highScoreCalculator(){
+        //let highscore = highscores.reduce(0, +)
+        //print(highscore)
     }
+    
     
     // MARK: Player Loses
     func playerLoses(){
