@@ -25,6 +25,7 @@ struct ContentView: View {
     @State private var amountOne: Int = 0
     @State private var numberOfTries = 0
     @State private var highscore = 0
+    @State private var lastScore = 0
     
     @State private var showingModal: Bool = false
     @State private var showingWinAmount: Bool = false
@@ -35,6 +36,8 @@ struct ContentView: View {
     
     //Database Handlers
     private let database = Database.database().reference()
+    var taskRef: DatabaseReference?
+    var refHandle: DatabaseHandle?
     
     /* Creating an array for each slot:
      * Index 0 = Slot On Top
@@ -134,19 +137,36 @@ struct ContentView: View {
     }
     
     
-    //MARK: HIGHSCORE CALCULATOR
+    //MARK: HIGHSCORE CALCULATOR & ADD TO DB
     func highScoreCalculator(){
         var payouts: [String:Int] = [:]
         highscore = highscores.reduce(0, +)
-        print(highscore)
         
-        payouts["Highest Payout"] = highscore
+        
+        
+        payouts["Highest Active"] = highscore
+        payouts["Last High Score"] = lastScore
         database.child("Payouts").setValue(payouts)
     }
     
-    func addHStoDB(){
-        //Empty Dict to hold highscore
-
+    func loadHighestPayout(){
+        var refHandle: DatabaseReference?
+        var payouts: [String:Int] = [:]
+        refHandle = Database.database().reference()
+        
+        
+        refHandle?.child("Payouts").observeSingleEvent(of: .value, with: { snapshot in
+            let value = snapshot.value as? NSDictionary
+            let hs = value?["Last High Score"] as? Int ?? 0
+            print("last score -> ",hs)
+            if highscore < hs{
+                payouts["Last High Score"] = hs
+                database.child("Payouts").setValue(payouts)
+            }else{
+                payouts["Last High Score"] = highscore
+                database.child("Payouts").setValue(payouts)
+            }
+        })
     }
     
     
@@ -247,6 +267,7 @@ struct ContentView: View {
                         self.gameOver()
                         self.checkBetAmount()
                         self.highScoreCalculator()
+                        self.loadHighestPayout()
                     }){
                         Image("spin")
                             .renderingMode(.original)
@@ -364,15 +385,42 @@ struct ContentView: View {
                 HStack{
                     
                     HStack{
-                        //MARK: HIGHSCORE
+                        //MARK: CURRENT HIGHSCORE
                         Button(action: {
-                            print("hs=",highscore)
+                            
+                        }){
+                            Text("CURRENT\nSCORE")
+                                .highStyle()
+                                .multilineTextAlignment(.trailing)
+                            
+                            Text("\(highscore)")
+                                .numberStyle()
+                                .layoutPriority(1)
+                        }
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 8)
+                        .frame(minWidth: 128)
+                        .background(
+                            Capsule()
+                                .foregroundColor(Color("informationBg"))
+                        )
+                        .blur(radius: coins < 10 ? 3 : 0, opaque: false)
+                        .disabled(coins < 10) //coin count below 10, disable the button
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    HStack{
+                        //MARK: LAST HIGHSCORE
+                        Button(action: {
+                            
                         }){
                             Text("HIGH\nSCORE")
                                 .highStyle()
                                 .multilineTextAlignment(.trailing)
                             
-                            Text("\(highscore)")
+                            Text("\(lastScore)")
                                 .numberStyle()
                                 .layoutPriority(1)
                         }
@@ -431,6 +479,13 @@ struct ContentView: View {
                         Button(action:{
                             self.showingModal = false
                             self.coins = 2500
+                            self.lastScore = self.highscore
+                            self.highscore = 0
+                            self.highscores.removeAll()
+                            loadHighestPayout()
+                            highScoreCalculator()
+                            
+                            
                         }){
                             Text("RESTART")
                                 .font(.system(.body, design: .rounded))
