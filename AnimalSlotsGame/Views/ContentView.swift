@@ -141,36 +141,39 @@ struct ContentView: View {
     }
     
     
-    //MARK: HIGHSCORE CALCULATOR & ADD TO DB
-    func highScoreCalculator(){
-        var payouts: [String:Int] = [:]
-        highscore = highscores.reduce(0, +)
-        
-        
-        
-        payouts["Highest Active"] = highscore
-        payouts["Last High Score"] = lastScore
-        database.child("Payouts").setValue(payouts)
-    }
-    
-    func loadHighestPayout(){
-        var refHandle: DatabaseReference?
-        var payouts: [String:Int] = [:]
-        refHandle = Database.database().reference()
-        
-        
-        refHandle?.child("Payouts").observeSingleEvent(of: .value, with: { snapshot in
-            let value = snapshot.value as? NSDictionary
-            let hs = value?["Last High Score"] as? Int ?? 0
-            print("last score -> ",hs)
-            if highscore < hs{
-                payouts["Last High Score"] = hs
-                database.child("Payouts").setValue(payouts)
+    //MARK: Loading Highscore from db, comparing with current highscore
+    func loadHighestScore(){
+        let scoreRef = scoreReference.document("highScore")
+        scoreRef.getDocument {(document, error) in
+            if let document = document, document.exists {
+                let data = document.data()!
+                let lastHighScore = data["score"] as? Int ?? 0
+                print("Last Score Is: \(lastHighScore) and Current Score is: \(highscore)")
+                    if lastHighScore < highscore{
+                        updateUserScore(score: highscore)
+                        lastScore = highscore
+                    }
             }else{
-                payouts["Last High Score"] = highscore
-                database.child("Payouts").setValue(payouts)
+                updateUserScore(score: highscore)
+                print("Document does not exist")
             }
-        })
+        }
+        
+    }
+
+
+    //MARK:Update High Score
+    func updateUserScore(score:Int){
+        scoreReference.document("highScore").setData([
+            "score":score,
+            "sortingDate":FieldValue.serverTimestamp()
+        ], merge: true) { (err) in
+            if let err = err {
+                debugPrint("Error adding document: \(err)")
+            } else {
+                //Do nothing
+            }
+        }
     }
     
     
@@ -270,8 +273,7 @@ struct ContentView: View {
                         self.checkWinning()
                         self.gameOver()
                         self.checkBetAmount()
-                        self.loadHighestPayout()
-                        self.highScoreCalculator()
+                        
                         
                     }){
                         Image("spin")
@@ -487,8 +489,7 @@ struct ContentView: View {
                             self.lastScore = self.highscore
                             self.highscore = 0
                             self.highscores.removeAll()
-                            loadHighestPayout()
-                            highScoreCalculator()
+                            
                             
                             
                         }){
