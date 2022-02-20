@@ -34,6 +34,9 @@ struct ContentView: View {
     @State private var disabledBtn: Bool = false
     @State private var showingInfoView: Bool = false
     
+    //Initializing firestore collection
+    let scoreReference = Firestore.firestore().collection("scores")
+    
     //Database Handlers
     private let database = Database.database().reference()
     var taskRef: DatabaseReference?
@@ -87,6 +90,7 @@ struct ContentView: View {
                 showingJackpotAmount = true
                 coins += jackpot
                 amountOne = jackpot
+                
                 highscores.append(amountOne)
                 
             }
@@ -266,8 +270,9 @@ struct ContentView: View {
                         self.checkWinning()
                         self.gameOver()
                         self.checkBetAmount()
-                        self.highScoreCalculator()
                         self.loadHighestPayout()
+                        self.highScoreCalculator()
+                        
                     }){
                         Image("spin")
                             .renderingMode(.original)
