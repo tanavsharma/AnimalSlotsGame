@@ -77,6 +77,8 @@ struct ContentView: View {
         }
     }
     
+    //MARK: CALCULATE CURRENT HS
+    
     // Check To See if the player won
     func checkWinning(){
         
@@ -90,7 +92,7 @@ struct ContentView: View {
                 showingJackpotAmount = true
                 coins += jackpot
                 amountOne = jackpot
-                
+                loadPayout(amountToChange: -jackpot)
                 highscores.append(amountOne)
                 
             }
@@ -100,6 +102,7 @@ struct ContentView: View {
                 showingWinAmount = true
                 coins += betAmount * 10
                 amountOne = betAmount * 10
+                loadPayout(amountToChange: -(betAmount * 10))
                 highscores.append(amountOne)
                 
             }
@@ -109,6 +112,7 @@ struct ContentView: View {
                 showingWinAmount = true
                 coins += betAmount * 7
                 amountOne = betAmount * 7
+                loadPayout(amountToChange: -(betAmount * 7))
                 highscores.append(amountOne)
                
             }
@@ -119,6 +123,7 @@ struct ContentView: View {
                 coins += betAmount * 14
                 amountOne = betAmount * 14
                 showingWinAmount = true
+                loadPayout(amountToChange: -(betAmount * 14))
                 highscores.append(amountOne)
                 
             }
@@ -128,6 +133,7 @@ struct ContentView: View {
                 coins += betAmount * 5
                 amountOne = betAmount * 5
                 showingWinAmount = true
+                loadPayout(amountToChange: -(betAmount * 5))
                 highscores.append(amountOne)
                 
             }
@@ -160,7 +166,28 @@ struct ContentView: View {
         }
         
     }
-
+    
+    //MARK: Getting Jackpot from DB and then adding or subtracting it
+    func loadPayout(amountToChange:Int){
+        let scoreRef = scoreReference.document("jackpot")
+        scoreRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()!
+                let amount = data["amount"] as? Int ?? 0
+                print("Amount is: \(amount)")
+                print("Now jackpot is: \(amount + amountToChange)")
+                if amount + amountToChange <= 0{
+                    updateUserJackpot(amount: 0)
+                }else{
+                    updateUserJackpot(amount: amount + amountToChange)
+                }
+            } else {
+                updateUserJackpot(amount: jackpot)
+                print("Document does not exist")
+            }
+        }
+        
+    }
 
     //MARK:Update High Score
     func updateUserScore(score:Int){
@@ -176,10 +203,70 @@ struct ContentView: View {
         }
     }
     
+    //MARK: Update Jackpot
+    func updateUserJackpot(amount: Int){
+        scoreReference.document("jackpot").setData([
+            "amount": amount,
+            "sortingDate":FieldValue.serverTimestamp()
+        ], merge: true){(err) in
+            if let err = err {
+                debugPrint("Error adding document:\(err)")
+            }else{
+                //do nothing
+            }
+        }
+    }
+    
+    //MARK: Fetching Jackpot From DB
+    func fetchJackpotFromFirestore() -> Int{
+        let scoreRef = Firestore.firestore().collection("scores").document("jackpot")
+        scoreRef.getDocument {(document, error) in
+            if let document = document, document.exists{
+                let data = document.data()!
+                let amount = data["amount"] as? Int ?? 0
+                jackpot = amount
+                print("Jackpot amount is: \(jackpot)")
+            }else{
+                jackpot = 0
+                print("Document does not exist")
+            }
+        }
+        return 0
+    }
+    
+    //MARK: Fetching Highscore from DB
+    func fetchHighScoreFromFirestore() -> Int {
+        let scoreRef = Firestore.firestore().collection("scores").document("highScore")
+        scoreRef.getDocument{ (document, error) in
+            if let document = document, document.exists{
+                let data = document.data()!
+                let lastHighScore = data["score"] as? Int ?? 0
+                lastScore = lastHighScore
+            } else {
+                lastScore = 0
+                
+            }
+        }
+        return 0
+    }
+    
+    //MARK: This Function will be called everytime the app opens
+    private func fetch(){
+        scoreReference.document("highScore").addSnapshotListener{
+            snapShot, err in
+            fetchHighScoreFromFirestore()
+        }
+        scoreReference.document("jackpot").addSnapshotListener{
+            snapShot, err in
+            fetchJackpotFromFirestore()
+        }
+    }
+    
     
     // MARK: Player Loses
     func playerLoses(){
         coins -= betAmount
+        loadPayout(amountToChange: betAmount)
     }
     
     // MARK: Bet Checker
@@ -736,7 +823,7 @@ struct ContentView: View {
             
             
             
-        }
+        }.onAppear(perform: fetch)
 
         // BACKGROUND
         .background(Image("background"))
