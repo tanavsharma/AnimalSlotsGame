@@ -79,6 +79,7 @@ struct ContentView: View {
     
     //MARK: CALCULATE CURRENT HS
     
+    
     // Check To See if the player won
     func checkWinning(){
         
@@ -92,6 +93,7 @@ struct ContentView: View {
                 showingJackpotAmount = true
                 coins += jackpot
                 amountOne = jackpot
+                highscore = highscore + amountOne
                 loadPayout(amountToChange: -jackpot)
                 highscores.append(amountOne)
                 
@@ -102,6 +104,7 @@ struct ContentView: View {
                 showingWinAmount = true
                 coins += betAmount * 10
                 amountOne = betAmount * 10
+                highscore = highscore + (betAmount * 10)
                 loadPayout(amountToChange: -(betAmount * 10))
                 highscores.append(amountOne)
                 
@@ -112,6 +115,7 @@ struct ContentView: View {
                 showingWinAmount = true
                 coins += betAmount * 7
                 amountOne = betAmount * 7
+                highscore = highscore + (betAmount * 7)
                 loadPayout(amountToChange: -(betAmount * 7))
                 highscores.append(amountOne)
                
@@ -123,6 +127,7 @@ struct ContentView: View {
                 coins += betAmount * 14
                 amountOne = betAmount * 14
                 showingWinAmount = true
+                highscore = highscore + (betAmount * 14)
                 loadPayout(amountToChange: -(betAmount * 14))
                 highscores.append(amountOne)
                 
@@ -133,6 +138,7 @@ struct ContentView: View {
                 coins += betAmount * 5
                 amountOne = betAmount * 5
                 showingWinAmount = true
+                highscore = highscore + (betAmount * 5)
                 loadPayout(amountToChange: -(betAmount * 5))
                 highscores.append(amountOne)
                 
@@ -177,7 +183,7 @@ struct ContentView: View {
                 print("Amount is: \(amount)")
                 print("Now jackpot is: \(amount + amountToChange)")
                 if amount + amountToChange <= 0{
-                    updateUserJackpot(amount: 0)
+                    updateUserJackpot(amount: 25000)
                 }else{
                     updateUserJackpot(amount: amount + amountToChange)
                 }
@@ -227,7 +233,7 @@ struct ContentView: View {
                 jackpot = amount
                 print("Jackpot amount is: \(jackpot)")
             }else{
-                jackpot = 0
+                jackpot = 25000
                 print("Document does not exist")
             }
         }
@@ -252,12 +258,10 @@ struct ContentView: View {
     
     //MARK: This Function will be called everytime the app opens
     private func fetch(){
-        scoreReference.document("highScore").addSnapshotListener{
-            snapShot, err in
+        scoreReference.document("highScore").addSnapshotListener{ snapShot, err in
             fetchHighScoreFromFirestore()
         }
-        scoreReference.document("jackpot").addSnapshotListener{
-            snapShot, err in
+        scoreReference.document("jackpot").addSnapshotListener{ snapShot, err in
             fetchJackpotFromFirestore()
         }
     }
@@ -360,6 +364,7 @@ struct ContentView: View {
                         self.checkWinning()
                         self.gameOver()
                         self.checkBetAmount()
+                        self.loadHighestScore()
                         
                         
                     }){
@@ -573,9 +578,11 @@ struct ContentView: View {
                         Button(action:{
                             self.showingModal = false
                             self.coins = 2500
-                            self.lastScore = self.highscore
+                            self.lastScore = self.lastScore
                             self.highscore = 0
                             self.highscores.removeAll()
+                            loadHighestScore()
+                            
                             
                             
                             
@@ -678,7 +685,7 @@ struct ContentView: View {
                         
                     //Message
                         VStack(alignment: .center, spacing: 16){
-                            Text("You Won The JACKPOT amount of\n $\(jackpot)")
+                            Text("You Won The JACKPOT amount of\n $\(amountOne)")
                                 .font(.system(.body,design: .rounded))
                                 .lineLimit(2)
                                 .multilineTextAlignment(.center)
@@ -748,8 +755,12 @@ struct ContentView: View {
                         
                         //MARK: ALERT RESTART
                         Button(action:{
-                            self.showingAlert = false
+                            
                             self.coins = 2500
+                            self.lastScore = self.lastScore
+                            self.highscore = 0
+                            loadHighestScore()
+                            self.showingAlert = false
                         }){
                             Text("RESTART")
                                 .font(.system(.body, design: .rounded))
